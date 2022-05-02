@@ -3,7 +3,7 @@ class GLUD:
         self.file_name = file_name
         self.name = ""
         self.variables = []
-        self.terminals = [""]
+        self.terminals = []
         self.productions = {}
         self.initial_variable = ""
         self.parse_glud()
@@ -75,11 +75,11 @@ class GLUD:
             else:
                 self.productions[left] = [right_list]
 
+    def __str__(self):
+        name = f"{self.name}\n"
+        terminals = f"Terminais: {self.terminals}\n"
+        variables = f"Variaveis: {self.variables}\n"
+        initial_variable = f"Variavel inicial: {self.initial_variable}\n"
+        productions = f"Produções: {self.productions}\n"
 
-if __name__ == "__main__":
-    glud = GLUD("test.txt")
-    print(glud.name)
-    print(glud.productions)
-    print(glud.variables)
-    print(glud.terminals)
-    print(glud.initial_variable)
+        return name + terminals + variables + initial_variable + productions

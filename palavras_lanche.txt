@@ -1,0 +1,10 @@
+cpl1b3s1f
+cl2b2s2f
+cl3b3s1f
+cpl1b2s3f
+cpl1b1s1f
+pl1b3s2f
+cl3b3s3
+pl2b1s3
+cpl3b1s2
+cl3b4s4f

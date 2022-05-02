@@ -1,0 +1,18 @@
+MenuLanches=({B,F,I,L,M,N,O,P,S},{b,c,f,l,p,s,1,2,3},prod,I)
+prod
+I -> cP
+I -> cL
+P -> pL
+L -> lM
+M -> 1B
+M -> 2B
+M -> 3B
+B -> bN
+N -> 1S
+N -> 2S
+N -> 3S
+S -> sO
+O -> 1F
+O -> 2F
+O -> 3F
+F -> f

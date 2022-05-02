@@ -1,6 +1,9 @@
+from itertools import product
+
+
 class AFD:
     def __init__(self):
-        self.alphabet = [""]
+        self.alphabet = []
         self.states = []
         self.program_function = {}
         self.initial_state = ""
@@ -70,22 +73,53 @@ class AFD:
         """
         return self.test_rec(word, self.initial_state, 0)  # começa o teste no estado inicial e com a primeira letra
 
-    def isFinite(self):
+    def is_finite(self):
         """
         :return:
         - True: se a linguagem ACEITA(AFD) for finita
         - False: se a linguagem ACEITA(AFD) for infinita
         """
-        is_finite = true
-        states_quantity = len(self.states)
-        words = generateAllWords(self.alphabet, states_quantity, 2 * states_quantity)
-
+        is_finite = True
+        words = self.generate_all_words()
         if "" in words:
             words.remove("")
 
         for word in words:
             if self.test(word):
-                is_finite = false
+                is_finite = False
                 break
 
         return is_finite
+
+    def generate_all_words(self):
+        """
+        Gera todas as palavras de tamanho w com os caractares do alfabeto, em que n <= w < 2n,
+        sendo n o numero de estados do autômato
+        """
+        words = []
+        for i in range(len(self.states), len(self.states)*2):
+            words.extend(product(self.alphabet, repeat=i))
+        words_list = ["".join(word_tuple) for word_tuple in words]
+        return words_list
+
+    def test_words(self, file_name):
+        """
+        Testa todas as palavras de uma lista de palavras
+        :param file_name: nome do arquivo txt contendo a lista de palavras
+        """
+        with open(file_name,"r") as f:
+            for line in f:
+                # não pega o \n
+                word = line[:-1]
+                accept = self.test(word)
+                print(f"palavra: {word} -> {'Aceita' if accept else 'Recusa'}")
+
+    def __str__(self):
+        alphabet = f"Alfabeto: {self.alphabet}\n"
+        states = f"Estados: {self.states}\n"
+        initial_states = f"Estado inicial: {self.initial_state}\n"
+        final_states = f"Estado final: {self.final_states[0]}\n"
+        pf = f"Função programa: {self.program_function}\n"
+
+        return alphabet + states + initial_states + final_states + pf
+
