@@ -36,7 +36,7 @@ class GLUD:
         prod_name_def = elements[curly_brackets_index[1]+2:last_char_prod_name]
 
         # ,A) -> A
-        self.ini = elements[curly_brackets_index[1]+2+last_comma+1]
+        self.ini = elements[last_char_prod_name+1]
         # segunda linha
         prod_name = glud_str[1]
         if prod_name_def != prod_name:
@@ -47,7 +47,6 @@ class GLUD:
             get_prod = prod.split("->")
             left = get_prod[0].strip()
             right = get_prod[1].strip()
-            right_list = []
             # verifica se o termo da esquerda é uma variavel
             if left not in self.var:
                 raise Exception(f"Variável {left} não está na lista de variáveis")
