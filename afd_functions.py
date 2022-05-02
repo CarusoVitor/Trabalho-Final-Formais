@@ -13,8 +13,7 @@ class AFD:
         - Estrutura que representa um AFD
         """
         # Repassa todas as produções para o dicionário da função programa do AFD
-        for production in glud.productions:
-            self.program_function[production] = glud.productions[production]
+        self.program_function = glud.productions.copy()
         self.final_states.append("Qf")
 
         # Troca as produções que não possuem variáveis no lado direito por transições para um estado final
@@ -23,8 +22,8 @@ class AFD:
                 if transition[1] == "":
                     transition[1] = self.final_states[0]
 
-        self.alphabet = glud.terminals
-        self.states = glud.variables
+        self.alphabet = glud.terminals.copy()
+        self.states = glud.variables.copy()
         self.states.append("Qf")
         self.initial_state = glud.initial_variable
 
@@ -70,3 +69,23 @@ class AFD:
         - False: se a palavra não pertencer à ACEITA(AFD)
         """
         return self.test_rec(word, self.initial_state, 0)  # começa o teste no estado inicial e com a primeira letra
+
+    def isFinite(self):
+        """
+        :return:
+        - True: se a linguagem ACEITA(AFD) for finita
+        - False: se a linguagem ACEITA(AFD) for infinita
+        """
+        is_finite = true
+        states_quantity = len(self.states)
+        words = generateAllWords(self.alphabet, states_quantity, 2 * states_quantity)
+
+        if "" in words:
+            words.remove("")
+
+        for word in words:
+            if self.test(word):
+                is_finite = false
+                break
+
+        return is_finite
