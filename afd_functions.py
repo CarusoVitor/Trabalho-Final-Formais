@@ -13,8 +13,8 @@ class AFD:
         - Estrutura que representa um AFD
         """
         # Repassa todas as produções para o dicionário da função programa do AFD
-        for production in glud.prod:
-            self.program_function[production] = glud.prod[production]
+        for production in glud.productions:
+            self.program_function[production] = glud.productions[production]
         self.final_states.append("Qf")
 
         # Troca as produções que não possuem variáveis no lado direito por transições para um estado final
@@ -23,9 +23,9 @@ class AFD:
                 if transition[1] == "":
                     transition[1] = self.final_states[0]
 
-        self.alphabet = glud.term
-        self.states = glud.var
-        self.initial_state = glud.ini
+        self.alphabet = glud.terminals
+        self.states = glud.variables
+        self.initial_state = glud.initial_variable
 
     def afd_test(self, word):
         """
