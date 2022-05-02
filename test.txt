@@ -1,0 +1,7 @@
+MinhaGLUD=({A,B,C},{a,b,c},prod,A)
+prod
+A -> aB
+B -> bC
+A -> b
+C ->
+C -> cA

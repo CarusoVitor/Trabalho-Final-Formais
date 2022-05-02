@@ -5,8 +5,7 @@ glud = GLUD("test.txt")
 afd = AFD()
 afd.glud_to_afd(glud)
 
-words_list = ["b", "", "ab", "abc", "abab", "abcabc"]
+words_list = ["b", "", "ab", "abc", "abab", "abcb", "abcab", "ababb", "abababb"]
 
-print(words_list)
 for word in words_list:
-    print(f"word: {word} -> {afd.afd_test(word)}")
+    print(f"word: {word} -> {afd.test(word)}")

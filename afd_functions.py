@@ -25,19 +25,10 @@ class AFD:
 
         self.alphabet = glud.terminals
         self.states = glud.variables
+        self.states.append("Qf")
         self.initial_state = glud.initial_variable
 
-    def afd_test(self, word):
-        """
-        :param word: palavra a ser testada se é aceita pelo AFD
-        :return:
-        - True: se a palavra pertencer à ACEITA(AFD)
-        - False: se a palavra não pertencer à ACEITA(AFD)
-        """
-        return afd_test_rec(self, word, afd.initial_state, 0)  # começa o teste no estado inicial e com a primeira letra
-
-
-    def afd_test_rec(self, word, current_state, word_index):
+    def test_rec(self, word, current_state, word_index):
         """
         :param word: palavra a ser testada se é aceita pelo AFD
         :param current_state: estado atual em que estamos no AFD
@@ -46,13 +37,36 @@ class AFD:
         - True: se a palavra pertencer à ACEITA(AFD)
         - False: se a palavra não pertencer à ACEITA(AFD)
         """
-        if word_index == len(word):                     # se checou toda a palavra já
-            return current_state in self.final_states    # testa se estamos num estado final
+        valid_state = False
+        word_len = len(word)
 
-        for transition in self.program_function[current_state]:
-            if transition[0] == word[word_index]:                               # se achou uma transição possível
-                return afd_test_rec(self, word, transition[1], word_index + 1)  # avança no AFD e atualiza a letra
-            elif transition[0] == "":                                           # se achou uma transição vazia
-                return afd_test_rec(self, word, transition[1], word_index)      # avança no AFD e continua com a mesma letra
+        # se checou toda a palavra e estamos num estado final
+        if word_index == word_len and current_state in self.final_states:
+            return True
+
+        for state in self.program_function.keys():      # Verifica se existe transição começando no estado atual
+            if state == current_state:
+                valid_state = True
+                break
+
+        if not valid_state:
+            return False
+
+        for transition in self.program_function[current_state]:        # Verifica todas as transições do estado atual
+            if word_index != word_len and transition[0] == word[word_index] :  # se achou uma transição possível
+                if self.test_rec(word, transition[1], word_index + 1): # avança no AFD e atualiza a letra
+                    return True
+            elif transition[0] == "":                                  # se achou uma transição vazia
+                if self.test_rec(word, transition[1], word_index):     # avança no AFD e continua com a mesma letra
+                    return True
 
         return False                                    # se não achou nenhuma transição, rejeita por indefinição
+
+    def test(self, word):
+        """
+        :param word: palavra a ser testada se é aceita pelo AFD
+        :return:
+        - True: se a palavra pertencer à ACEITA(AFD)
+        - False: se a palavra não pertencer à ACEITA(AFD)
+        """
+        return self.test_rec(word, self.initial_state, 0)  # começa o teste no estado inicial e com a primeira letra
