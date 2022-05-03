@@ -1,0 +1,4 @@
+• Ao executar o programa [nome do executável], será exigido logo em seguida um arquivo de texto de entrada
+  que representa uma GLUD no formato descrito pelo trabalho.
+• Após isso, será requisitado outro arquivo de texto contendo uma lista de palavras a serem testadas para
+  sabermos se estão contidas em ACEITA(M), sendo M um AFD equivalente à GLUD dada inicialmente
